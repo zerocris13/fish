@@ -4,15 +4,15 @@ Proyecto desarrollado para el curso **Desarrollo en Aplicaciones con Visión Art
 
 ## Descripción del proyecto
 
-La medición del tamaño y la masa de los peces normalmente requiere manipularlos de manera directa. Además de demandar tiempo, este procedimiento puede generar estrés en los animales y dificultar la realización de mediciones frecuentes.
+Este proyecto aborda la detección automática de peces en imágenes submarinas y la localización de puntos anatómicos de referencia. Las condiciones de iluminación, turbidez, densidad de peces y posibles superposiciones hacen que esta tarea sea más compleja que la detección en imágenes convencionales.
 
-Este proyecto propone una alternativa basada en visión artificial para detectar peces en imágenes y localizar puntos anatómicos relevantes de su cuerpo. Para ello, se realiza el fine-tuning de un modelo **YOLO11 Pose**, el cual permite identificar al pez y estimar la posición de sus puntos clave.
+Para ello, se realizó el fine-tuning de un modelo **YOLO11s-Pose**, adaptado para detectar una sola clase, `fish`, y estimar cuatro keypoints 2D por pez: cabeza, cola, punto superior y punto inferior. El modelo fue entrenado y evaluado con imágenes de carpa herbívora obtenidas en distintas condiciones acuáticas.
 
-A partir de estos puntos se pueden calcular medidas morfométricas, como la longitud y el ancho corporal, que posteriormente pueden relacionarse con la masa del pez. De esta manera, se busca sentar las bases para un sistema automático, rápido y no invasivo de monitoreo.
+El resultado del proyecto es un modelo capaz de detectar múltiples peces y localizar sus cuatro puntos anatómicos en una sola etapa. El trabajo se concentra únicamente en la detección y estimación de keypoints 2D; no se realizó el cálculo del tamaño ni la estimación de la masa de los peces.
 
 ## Objetivo
 
-Desarrollar un modelo de visión artificial capaz de detectar peces y localizar puntos anatómicos de referencia para obtener medidas corporales útiles en la estimación de su tamaño y masa.
+Desarrollar y evaluar un modelo basado en **YOLO11s-Pose** para detectar peces en imágenes submarinas y localizar cuatro keypoints anatómicos: cabeza, cola, punto superior y punto inferior.
 
 ## Metodología general
 
@@ -23,8 +23,6 @@ El proyecto considera las siguientes etapas:
 3. División del dataset en conjuntos de entrenamiento, validación y prueba.
 4. Fine-tuning de un modelo YOLO11 Pose.
 5. Evaluación mediante métricas de detección y estimación de puntos clave.
-6. Obtención de medidas morfométricas a partir de las coordenadas predichas.
-7. Análisis de la relación entre las medidas corporales y la masa del pez.
 
 ## Modelo utilizado
 
