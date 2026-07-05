@@ -1,4 +1,4 @@
-# Estimación del tamaño y masa de peces mediante visión artificial
+# Detección de peces y estimación de keypoints 2D mediante YOLO11s-Pose
 
 Proyecto desarrollado para el curso **Desarrollo en Aplicaciones con Visión Artificial**.
 
