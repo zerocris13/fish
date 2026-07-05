@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables and credentials
+.env
+.env.*
+*.key
+*.pem
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.code-workspace
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ultralytics / training outputs
+runs/
+runs_s/
+wandb/
+
+# Model weights and exported models
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.torchscript
+
+# Large datasets and archives
+dataset/
+datasets/
+data/raw/
+images/train/
+images/val/
+images/test/
+labels/train/
+labels/val/
+labels/test/
+*.zip
+*.rar
+*.7z
+
+# Temporary files
+*.tmp
+*.log
+
+runs_s_768_con_flip/
+
+animals-15-02862-v3.pdf
