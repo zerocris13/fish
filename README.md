@@ -1,109 +1,72 @@
-# Fish Pose Estimation with YOLO11
+# Estimación del tamaño y masa de peces mediante visión artificial
 
-Computer vision project for detecting fish and localizing anatomical keypoints using a custom YOLO11 pose model. The predicted keypoints can be used as the basis for geometric measurements and future fish size or weight estimation.
+Proyecto desarrollado para el curso **Desarrollo en Aplicaciones con Visión Artificial**.
 
-## Project objectives
+## Descripción del proyecto
 
-- Detect fish in images.
-- Locate relevant anatomical keypoints.
-- Evaluate the model using pose-estimation metrics.
-- Use the predicted geometry for subsequent morphometric analysis.
+La medición del tamaño y la masa de los peces normalmente requiere manipularlos de manera directa. Además de demandar tiempo, este procedimiento puede generar estrés en los animales y dificultar la realización de mediciones frecuentes.
 
-## Model and training configuration
+Este proyecto propone una alternativa basada en visión artificial para detectar peces en imágenes y localizar puntos anatómicos relevantes de su cuerpo. Para ello, se realiza el fine-tuning de un modelo **YOLO11 Pose**, el cual permite identificar al pez y estimar la posición de sus puntos clave.
 
-The project uses the Ultralytics implementation of **YOLO11 Pose** with the following main configuration:
+A partir de estos puntos se pueden calcular medidas morfométricas, como la longitud y el ancho corporal, que posteriormente pueden relacionarse con la masa del pez. De esta manera, se busca sentar las bases para un sistema automático, rápido y no invasivo de monitoreo.
 
-- Base model: `yolo11s-pose.pt`
-- Image size: `768 × 768`
-- Epochs: `150`
+## Objetivo
+
+Desarrollar un modelo de visión artificial capaz de detectar peces y localizar puntos anatómicos de referencia para obtener medidas corporales útiles en la estimación de su tamaño y masa.
+
+## Metodología general
+
+El proyecto considera las siguientes etapas:
+
+1. Selección y preparación de imágenes de peces.
+2. Anotación de los peces y sus puntos anatómicos.
+3. División del dataset en conjuntos de entrenamiento, validación y prueba.
+4. Fine-tuning de un modelo YOLO11 Pose.
+5. Evaluación mediante métricas de detección y estimación de puntos clave.
+6. Obtención de medidas morfométricas a partir de las coordenadas predichas.
+7. Análisis de la relación entre las medidas corporales y la masa del pez.
+
+## Modelo utilizado
+
+Se emplea el modelo **YOLO11s Pose** de Ultralytics. Este modelo permite realizar dos tareas de manera conjunta:
+
+- detectar la ubicación del pez mediante una caja delimitadora;
+- predecir la posición de los puntos anatómicos definidos durante la anotación.
+
+La configuración principal utilizada durante el entrenamiento fue:
+
+- Modelo base: `yolo11s-pose.pt`
+- Tamaño de imagen: `768 × 768`
+- Número de épocas: `150`
 - Batch size: `16`
-- Mosaic augmentation disabled during the last `10` epochs
+- Desactivación de mosaic durante las últimas `10` épocas
 
-```python
-from multiprocessing import freeze_support
-from ultralytics import YOLO
+## Contenido del repositorio
 
+- `fish_keypoint.yaml`: configuración del dataset y de los puntos clave.
+- `script_train_fine_tuning.py`: script utilizado para entrenar el modelo.
+- `predict_test.py`: script para realizar predicciones sobre nuevas imágenes.
+- `README.md`: descripción general del proyecto.
 
-def main():
-    model = YOLO("yolo11s-pose.pt")
+Los pesos entrenados, las imágenes y los resultados generados durante el entrenamiento no se incluyen directamente en el repositorio debido a su tamaño.
 
-    model.train(
-        data="fish_keypoint.yaml",
-        imgsz=768,
-        epochs=150,
-        batch=16,
-        project="runs_s/train",
-        name="fish_yolo11s_pose",
-        workers=0,
-        close_mosaic=10,
-    )
+## Dataset
 
+El dataset utilizado en el proyecto, junto con sus imágenes y anotaciones, se encuentra disponible en el siguiente enlace:
 
-if __name__ == "__main__":
-    freeze_support()
-    main()
-```
+[Dataset del proyecto en Google Drive](https://drive.google.com/drive/folders/14G5qUpQH5qdSwMXRlEMci_c-Zf4z_bZS)
 
-## Requirements
+## Integrantes
 
-- Python 3.10 or later
-- PyTorch
-- Ultralytics
-- OpenCV
-- NumPy
+- María Cristina Orihuela Flores
+- María Emilia Ochoa Enríquez
+- Juan Janpier Mío Mío
+- Sintia Vallet Marín Rodríguez
 
-Install the main dependency with:
+## Referencia principal
 
-```bash
-pip install ultralytics
-```
+El proyecto toma como referencia el trabajo:
 
-## Dataset configuration
+J. Wang, Z. Cheng, M. Lin, R. Yang y Q. Huang, “FishKP-YOLOv11: An Automatic Estimation Model for Fish Size and Mass in Complex Underwater Environments,” *Animals*, vol. 15, no. 19, art. 2862, 2025.
 
-The dataset must be described in `fish_keypoint.yaml`, including the paths to the training and validation images, the class names, and the keypoint configuration.
-
-Example:
-
-```yaml
-path: path/to/dataset
-train: images/train
-val: images/val
-
-names:
-  0: fish
-
-kpt_shape: [NUMBER_OF_KEYPOINTS, 3]
-```
-
-Replace `NUMBER_OF_KEYPOINTS` and the dataset paths with the values used in the project.
-
-## Training
-
-Run the Python script containing the training configuration:
-
-```bash
-python train.py
-```
-
-If the training script has a different filename, replace `train.py` with that filename.
-
-## Outputs
-
-Ultralytics stores the generated results in the directory configured through the `project` and `name` parameters. Typical outputs include:
-
-- Model weights
-- Training and validation curves
-- Confusion matrices
-- Precision, recall, and mAP metrics
-- Prediction examples
-
-Generated training runs and large model files are not included in this repository by default.
-
-## Project status
-
-This project is currently under development as part of the course **Development of Computer Vision Applications**.
-
-## Author
-
-**María Cristina Orihuela Flores**  
-GitHub: [@zerocris13](https://github.com/zerocris13)
+[https://doi.org/10.3390/ani15192862](https://doi.org/10.3390/ani15192862)
